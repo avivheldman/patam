@@ -1,4 +1,6 @@
 package test;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Topic {
     public final String name;
