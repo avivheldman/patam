@@ -6,7 +6,7 @@ import java.util.Collection;
 public class TopicManagerSingleton {
 
     // Static inner class - loaded only when first accessed
-    private static class TopicManager {
+    public static class TopicManager {
         // Single instance - thread-safe due to static initialization
         private static final TopicManager instance = new TopicManager();
 
