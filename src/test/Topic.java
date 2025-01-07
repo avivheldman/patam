@@ -40,7 +40,7 @@ public class Topic {
     public void publish(Message m) {
         if (m != null) {
             for (Agent subscriber : subs) {
-                subscriber.callback(this, m);
+                subscriber.callback(this.name, m);
             }
         }
     }
