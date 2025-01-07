@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import configs.Config;
+import configs.Node;
 import test.TopicManagerSingleton.TopicManager;
 
 public class MainTrain {

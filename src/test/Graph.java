@@ -1,5 +1,7 @@
 package test;
 
+import configs.Node;
+
 import java.util.ArrayList;
 
 public class Graph extends ArrayList<Node>{
