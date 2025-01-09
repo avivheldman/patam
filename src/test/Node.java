@@ -1,6 +1,4 @@
-package configs;
-
-import test.Message;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,6 @@
 package test;
 
 
-import configs.Config;
-
 public class MathExampleConfig implements Config {
 
     @Override
