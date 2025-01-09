@@ -92,13 +92,13 @@ public class MainTrain {
     }
 
     public static void testTopicsGraph(){
-        TopicManager tm=TopicManagerSingleton.get();
+         TopicManager tm=TopicManagerSingleton.get();
         tm.clear();
         Config c=new MathExampleConfig();
         c.create();
         Graph g=new Graph();
         g.createFromTopics();
-
+        System.out.println(tm.getAllTopicNames());
         if(g.size()!=8)
             System.out.println("the graph you created from topics is not in the right size (-10)");
 
@@ -123,7 +123,7 @@ public class MainTrain {
     public static void main(String[] args) {
         testCycles();
         testBinGraph();
-        testTopicsGraph();
+         testTopicsGraph();
         System.out.println("done");
     }
 

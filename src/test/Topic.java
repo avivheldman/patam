@@ -64,4 +64,12 @@ public class Topic {
             pubs.remove(a);
         }
     }
+    public List<Agent> getSubs() {
+        return new ArrayList<>(subs);  // Return a copy to maintain encapsulation
+    }
+
+    public List<Agent> getPubs() {
+        return new ArrayList<>(pubs);  // Return a copy to maintain encapsulation
+    }
+
 }

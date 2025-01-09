@@ -1,4 +1,6 @@
 package test;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Collection;
 
@@ -33,6 +35,10 @@ public class TopicManagerSingleton {
          */
         public Collection<Topic> getTopics() {
             return topics.values();
+        }
+
+        public Set<String> getAllTopicNames() {
+            return new HashSet<>(topics.keySet()); // Return a copy to prevent external modification
         }
 
         /**

@@ -21,6 +21,7 @@ public class BinOpAgent implements Agent {
         // Subscribe to both input topics
         TopicManagerSingleton.get().getTopic(inputTopic1).subscribe(this);
         TopicManagerSingleton.get().getTopic(inputTopic2).subscribe(this);
+
     }
 
     @Override
