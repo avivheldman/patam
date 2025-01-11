@@ -1,4 +1,8 @@
-package test;
+package configs;
+
+import test.Agent;
+import test.Message;
+import test.TopicManagerSingleton;
 
 public class IncAgent implements Agent {
     private final String name;
