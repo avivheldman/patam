@@ -30,9 +30,9 @@ public class MainTrain { // RequestParser
                 "\n" ;
 
         BufferedReader input=new BufferedReader(new InputStreamReader(new ByteArrayInputStream(request.getBytes())));
+        
         try {
             RequestParser.RequestInfo requestInfo = RequestParser.parseRequest(input);
-
             // Test HTTP command
             if (!requestInfo.getHttpCommand().equals("GET")) {
                 System.out.println("HTTP command test failed (-5)");
@@ -57,12 +57,14 @@ public class MainTrain { // RequestParser
             expectedParams.put("id", "123");
             expectedParams.put("name", "test");
             expectedParams.put("filename","\"hello_world.txt\"");
+            System.out.println(requestInfo.getParameters() + "vs expected... " + expectedParams);
             if (!requestInfo.getParameters().equals(expectedParams)) {
                 System.out.println("Parameters test failed (-5)");
             }
 
             // Test content
             byte[] expectedContent = "hello world!\n".getBytes();
+            System.out.println(requestInfo.getContent() + "vs expected... " + expectedContent);
             if (!Arrays.equals(requestInfo.getContent(), expectedContent)) {
                 System.out.println("Content test failed (-5)");
             }
@@ -81,14 +83,17 @@ public class MainTrain { // RequestParser
         server.addServlet("GET", "/test", new Servlet() {
             @Override
             public void handle(RequestParser.RequestInfo ri, OutputStream toClient) throws IOException {
+                System.out.println("[TestServlet] Handling request...");
                 String response = "HTTP/1.1 200 OK\r\n" +
+                        "Content-Type: text/plain\r\n" +
                         "Content-Length: 12\r\n" +
                         "\r\n" +
-                        "Test Success\r\n";
+                        "Test Success";
+                System.out.println("[TestServlet] Sending response: " + response);
                 toClient.write(response.getBytes());
                 toClient.flush();
+                System.out.println("[TestServlet] Response sent");
             }
-
 
             @Override
             public void close() throws IOException {}
