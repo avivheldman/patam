@@ -22,7 +22,7 @@ public class MainTrain { // RequestParser
         // Test data
         String request = "GET /api/resource?id=123&name=test HTTP/1.1\n" +
                 "Host: example.com\n" +
-                "Content-Length: 5\n"+
+                "Content-Length: 33\n"+
                 "\n" +
                 "filename=\"hello_world.txt\"\n"+
                 "\n" +
@@ -57,7 +57,7 @@ public class MainTrain { // RequestParser
             expectedParams.put("id", "123");
             expectedParams.put("name", "test");
             expectedParams.put("filename","\"hello_world.txt\"");
-            System.out.println(requestInfo.getParameters() + "vs expected... " + expectedParams);
+            System.out.println(requestInfo.getParameters() + " vs expected... " + expectedParams);
             if (!requestInfo.getParameters().equals(expectedParams)) {
                 System.out.println("Parameters test failed (-5)");
             }
