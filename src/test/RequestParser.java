@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
 
 public class RequestParser {
 
@@ -31,13 +32,14 @@ public class RequestParser {
     }
 
     public static RequestInfo parseRequest(BufferedReader reader) throws IOException {
+        // Read and parse request line
         String requestLine = reader.readLine();
+        System.out.println("Request line: " + requestLine);
 
         if (requestLine == null) {
             return null;
         }
 
-        // Parse request line
         String[] requestParts = requestLine.split(" ");
         if (requestParts.length < 2) {
             return null;
@@ -46,12 +48,11 @@ public class RequestParser {
         String httpCommand = requestParts[0];
         String fullUri = requestParts[1];
 
-        // Parse URI and parameters
+        // Parse URI parameters
         Map<String, String> parameters = new HashMap<>();
         String uri = fullUri;
         String[] uriParts;
 
-        // Handle query parameters in URI
         int questionMarkIndex = fullUri.indexOf('?');
         if (questionMarkIndex != -1) {
             uri = fullUri.substring(0, questionMarkIndex);
@@ -69,20 +70,22 @@ public class RequestParser {
         String[] tempParts = uri.substring(1).split("/");
         uriParts = tempParts[0].isEmpty() ? new String[0] : tempParts;
 
-        // Parse headers and look for Content-Length
+        // Read headers
         String line;
-        int contentLength = -1;
+        int contentLength = 0;
         while ((line = reader.readLine()) != null && !line.isEmpty()) {
+            System.out.println("Header line: " + line);
             if (line.toLowerCase().startsWith("content-length:")) {
                 contentLength = Integer.parseInt(line.substring("content-length:".length()).trim());
+                System.out.println("Content length found: " + contentLength);
             }
         }
 
-        // Read and parse content parameters
-        StringBuilder contentBuilder = new StringBuilder();
+        // Read content if exists
         if (contentLength > 0) {
-            // Read the first line which contains parameters
+            // Read parameter line
             String paramLine = reader.readLine();
+            System.out.println("Parameter line: " + paramLine);
             if (paramLine != null && paramLine.contains("=")) {
                 String[] paramParts = paramLine.split("=");
                 if (paramParts.length == 2) {
@@ -94,12 +97,19 @@ public class RequestParser {
             reader.readLine();
 
             // Read actual content
-            String contentLine;
-            while ((contentLine = reader.readLine()) != null) {
-                contentBuilder.append(contentLine).append("\n");
+            String contentLine = reader.readLine();
+            System.out.println("Content line: " + contentLine);
+
+            if (contentLine != null) {
+                // Make sure to include the newline at the end
+                String finalContent = contentLine + "\n";
+                byte[] contentBytes = finalContent.getBytes();
+                System.out.println("Final content (as string): '" + finalContent + "'");
+                return new RequestInfo(httpCommand, fullUri, uriParts, parameters, contentBytes);
             }
         }
 
-        return new RequestInfo(httpCommand, fullUri, uriParts, parameters, contentBuilder.toString().getBytes());
+        // If no content, return with empty content
+        return new RequestInfo(httpCommand, fullUri, uriParts, parameters, new byte[0]);
     }
 }
