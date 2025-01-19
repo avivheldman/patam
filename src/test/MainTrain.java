@@ -57,7 +57,6 @@ public class MainTrain { // RequestParser
             expectedParams.put("id", "123");
             expectedParams.put("name", "test");
             expectedParams.put("filename","\"hello_world.txt\"");
-            System.out.println(requestInfo.getParameters() + " vs expected... " + expectedParams);
             if (!requestInfo.getParameters().equals(expectedParams)) {
                 System.out.println("Parameters test failed (-5)");
             }
@@ -74,25 +73,21 @@ public class MainTrain { // RequestParser
         }
     }
 
-
     public static void testServer() throws Exception {
-        // יצירת מופע של השרת על פורט 8080
-        MyHTTPServer server = new MyHTTPServer(8080);
+        // יצירת מופע של השרת על פורט 8080 עם 10 ת'רדים
+        MyHTTPServer server = new MyHTTPServer(8080, 10);
 
         // הוספת Servlet לבדיקה עם כתובת /test
         server.addServlet("GET", "/test", new Servlet() {
             @Override
             public void handle(RequestParser.RequestInfo ri, OutputStream toClient) throws IOException {
-                System.out.println("[TestServlet] Handling request...");
                 String response = "HTTP/1.1 200 OK\r\n" +
                         "Content-Type: text/plain\r\n" +
                         "Content-Length: 12\r\n" +
                         "\r\n" +
                         "Test Success";
-                System.out.println("[TestServlet] Sending response: " + response);
                 toClient.write(response.getBytes());
                 toClient.flush();
-                System.out.println("[TestServlet] Response sent");
             }
 
             @Override

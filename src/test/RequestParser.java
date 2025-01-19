@@ -34,7 +34,7 @@ public class RequestParser {
     public static RequestInfo parseRequest(BufferedReader reader) throws IOException {
         // Read and parse request line
         String requestLine = reader.readLine();
-        System.out.println("Request line: " + requestLine);
+        //System.out.println("Request line: " + requestLine);
 
         if (requestLine == null) {
             return null;
@@ -74,10 +74,10 @@ public class RequestParser {
         String line;
         int contentLength = 0;
         while ((line = reader.readLine()) != null && !line.isEmpty()) {
-            System.out.println("Header line: " + line);
+            //System.out.println("Header line: " + line);
             if (line.toLowerCase().startsWith("content-length:")) {
                 contentLength = Integer.parseInt(line.substring("content-length:".length()).trim());
-                System.out.println("Content length found: " + contentLength);
+                //System.out.println("Content length found: " + contentLength);
             }
         }
 
@@ -85,7 +85,7 @@ public class RequestParser {
         if (contentLength > 0) {
             // Read parameter line
             String paramLine = reader.readLine();
-            System.out.println("Parameter line: " + paramLine);
+            //System.out.println("Parameter line: " + paramLine);
             if (paramLine != null && paramLine.contains("=")) {
                 String[] paramParts = paramLine.split("=");
                 if (paramParts.length == 2) {
@@ -98,13 +98,13 @@ public class RequestParser {
 
             // Read actual content
             String contentLine = reader.readLine();
-            System.out.println("Content line: " + contentLine);
+            //System.out.println("Content line: " + contentLine);
 
             if (contentLine != null) {
                 // Make sure to include the newline at the end
                 String finalContent = contentLine + "\n";
                 byte[] contentBytes = finalContent.getBytes();
-                System.out.println("Final content (as string): '" + finalContent + "'");
+                //System.out.println("Final content (as string): '" + finalContent + "'");
                 return new RequestInfo(httpCommand, fullUri, uriParts, parameters, contentBytes);
             }
         }
